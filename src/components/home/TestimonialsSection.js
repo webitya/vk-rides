@@ -57,7 +57,7 @@ export default function TestimonialsSection() {
                 ))}
               </div>
               <p style={{ fontSize: "16px", color: "#555", marginBottom: "15px", fontStyle: "italic" }}>
-                "{testimonial.text}"
+                {testimonial.text}
               </p>
               <p style={{ fontSize: "16px", fontWeight: "bold", color: "#1a1a1a" }}>- {testimonial.name}</p>
             </motion.div>

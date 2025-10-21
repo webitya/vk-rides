@@ -24,7 +24,7 @@ export default function AboutPage() {
             is smooth and hassle-free.
           </p>
           <p style={{ fontSize: "18px", lineHeight: "1.8", color: "#555" }}>
-            Our mission is to make self-drive car rental accessible to everyone, whether you're traveling for business
+            Our mission is to make self-drive car rental accessible to everyone, whether you are traveling for business
             or leisure.
           </p>
         </motion.div>
