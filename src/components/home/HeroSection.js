@@ -8,20 +8,13 @@ export default function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0)
 
   const slides = [
-    {
-      image: "/luxury-car-on-road-sunset.jpg",
-    },
-    {
-      image: "/modern-car-interior-dashboard.jpg",
-    },
-    {
-      image: "/car-driving-on-highway.jpg",
-    },
-    {
-      image: "/family-car-travel-adventure.jpg",
-    },
+    { image: "/luxury-car-on-road-sunset.jpg" },
+    { image: "/modern-car-interior-dashboard.jpg" },
+    { image: "/car-driving-on-highway.jpg" },
+    { image: "/family-car-travel-adventure.jpg" },
   ]
 
+  // Auto-slide effect (safe for SSR)
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length)
@@ -42,14 +35,9 @@ export default function HeroSection() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
+      className="relative mt-[60px] flex items-center justify-center overflow-hidden"
       style={{
-        position: "relative",
-        marginTop: "60px",
         height: "clamp(180px, 60vh, 100vh)",
-        overflow: "hidden",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
       }}
     >
       {/* Carousel Slides */}
@@ -59,119 +47,52 @@ export default function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: currentSlide === index ? 1 : 0 }}
           transition={{ duration: 0.8 }}
+          className="absolute inset-0"
           style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
             backgroundImage: `url(${slide.image})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
-            backgroundAttachment: "fixed",
+            backgroundAttachment: typeof window !== "undefined" && window.innerWidth > 768 ? "fixed" : "scroll",
           }}
         >
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: "rgba(0,0,0,0.3)",
-            }}
-          />
+          <div className="absolute inset-0 bg-black/30" />
         </motion.div>
       ))}
 
+      {/* Left Arrow */}
       <motion.button
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         onClick={handlePrev}
-        style={{
-          position: "absolute",
-          left: "16px",
-          top: "50%",
-          transform: "translateY(-50%)",
-          zIndex: 20,
-          backgroundColor: "rgba(255,255,255,0.3)",
-          border: "none",
-          borderRadius: "50%",
-          width: "40px",
-          height: "40px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          cursor: "pointer",
-          backdropFilter: "blur(4px)",
-          transition: "all 0.3s ease",
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.5)"
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.3)"
-        }}
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-full border-none bg-white/30 backdrop-blur-sm transition-all duration-300 hover:bg-white/50 cursor-pointer"
       >
         <ChevronLeft size={24} color="#fff" />
       </motion.button>
 
+      {/* Right Arrow */}
       <motion.button
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         onClick={handleNext}
-        style={{
-          position: "absolute",
-          right: "16px",
-          top: "50%",
-          transform: "translateY(-50%)",
-          zIndex: 20,
-          backgroundColor: "rgba(255,255,255,0.3)",
-          border: "none",
-          borderRadius: "50%",
-          width: "40px",
-          height: "40px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          cursor: "pointer",
-          backdropFilter: "blur(4px)",
-          transition: "all 0.3s ease",
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.5)"
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.3)"
-        }}
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-full border-none bg-white/30 backdrop-blur-sm transition-all duration-300 hover:bg-white/50 cursor-pointer"
       >
         <ChevronRight size={24} color="#fff" />
       </motion.button>
 
       {/* Slide Indicators */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: "12px",
-          left: "50%",
-          transform: "translateX(-50%)",
-          zIndex: 10,
-          display: "flex",
-          gap: "6px",
-        }}
-      >
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 flex gap-1.5">
         {slides.map((_, index) => (
           <motion.div
             key={index}
             onClick={() => setCurrentSlide(index)}
             whileHover={{ scale: 1.2 }}
+            className="cursor-pointer transition-all duration-300"
             style={{
               width: currentSlide === index ? "20px" : "6px",
               height: "6px",
               borderRadius: "3px",
-              backgroundColor: currentSlide === index ? "#6C63FF" : "rgba(255,255,255,0.4)",
-              cursor: "pointer",
-              transition: "all 0.3s ease",
+              backgroundColor:
+                currentSlide === index ? "#6C63FF" : "rgba(255,255,255,0.4)",
             }}
           />
         ))}
