@@ -2,10 +2,17 @@
 
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
+import ChevronRightIcon from "@mui/icons-material/ChevronRight"
 
 export default function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [isClient, setIsClient] = useState(false)
+
+  // Detect client to safely use window
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   const slides = [
     { image: "/luxury-car-on-road-sunset.jpg" },
@@ -14,7 +21,7 @@ export default function HeroSection() {
     { image: "/family-car-travel-adventure.jpg" },
   ]
 
-  // Auto-slide effect (safe for SSR)
+  // Auto-slide every 5s
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length)
@@ -37,10 +44,10 @@ export default function HeroSection() {
       transition={{ duration: 0.8 }}
       className="relative mt-[60px] flex items-center justify-center overflow-hidden"
       style={{
-        height: "clamp(180px, 60vh, 100vh)",
+        height: "clamp(180px, 60vh, 100vh)", // ✅ mobile max height = 180px
       }}
     >
-      {/* Carousel Slides */}
+      {/* Slides */}
       {slides.map((slide, index) => (
         <motion.div
           key={index}
@@ -52,34 +59,36 @@ export default function HeroSection() {
             backgroundImage: `url(${slide.image})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
-            backgroundAttachment: typeof window !== "undefined" && window.innerWidth > 768 ? "fixed" : "scroll",
+            // prevent "window is not defined" during SSR
+            backgroundAttachment:
+              isClient && window.innerWidth > 768 ? "fixed" : "scroll",
           }}
         >
           <div className="absolute inset-0 bg-black/30" />
         </motion.div>
       ))}
 
-      {/* Left Arrow */}
+      {/* Prev Button */}
       <motion.button
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         onClick={handlePrev}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-full border-none bg-white/30 backdrop-blur-sm transition-all duration-300 hover:bg-white/50 cursor-pointer"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white/30 backdrop-blur-sm transition-all duration-300 hover:bg-white/50 cursor-pointer"
       >
-        <ChevronLeft size={24} color="#fff" />
+        <ChevronLeftIcon style={{ color: "#fff", fontSize: 24 }} />
       </motion.button>
 
-      {/* Right Arrow */}
+      {/* Next Button */}
       <motion.button
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         onClick={handleNext}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-full border-none bg-white/30 backdrop-blur-sm transition-all duration-300 hover:bg-white/50 cursor-pointer"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white/30 backdrop-blur-sm transition-all duration-300 hover:bg-white/50 cursor-pointer"
       >
-        <ChevronRight size={24} color="#fff" />
+        <ChevronRightIcon style={{ color: "#fff", fontSize: 24 }} />
       </motion.button>
 
-      {/* Slide Indicators */}
+      {/* Indicators */}
       <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 flex gap-1.5">
         {slides.map((_, index) => (
           <motion.div
