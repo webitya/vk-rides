@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import SearchIcon from "@mui/icons-material/Search"
 import BookmarkIcon from "@mui/icons-material/Bookmark"
@@ -7,6 +8,21 @@ import PaymentIcon from "@mui/icons-material/Payment"
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar"
 
 export default function ProcessSection() {
+  const [isDesktop, setIsDesktop] = useState(false)
+
+  // ✅ Safe window handling
+  useEffect(() => {
+    const checkSize = () => {
+      if (typeof window !== "undefined") {
+        setIsDesktop(window.innerWidth > 768)
+      }
+    }
+
+    checkSize()
+    window.addEventListener("resize", checkSize)
+    return () => window.removeEventListener("resize", checkSize)
+  }, [])
+
   const steps = [
     {
       number: "1",
@@ -45,11 +61,23 @@ export default function ProcessSection() {
           style={{ textAlign: "center", marginBottom: "60px" }}
         >
           <h2
-            style={{ fontSize: "clamp(28px, 6vw, 40px)", fontWeight: "bold", marginBottom: "16px", color: "#1a1a1a" }}
+            style={{
+              fontSize: "clamp(28px, 6vw, 40px)",
+              fontWeight: "bold",
+              marginBottom: "16px",
+              color: "#1a1a1a",
+            }}
           >
             Simple Booking Process
           </h2>
-          <p style={{ fontSize: "16px", color: "#666", maxWidth: "600px", margin: "0 auto" }}>
+          <p
+            style={{
+              fontSize: "16px",
+              color: "#666",
+              maxWidth: "600px",
+              margin: "0 auto",
+            }}
+          >
             Get your dream car in just 4 easy steps
           </p>
         </motion.div>
@@ -74,8 +102,8 @@ export default function ProcessSection() {
                 textAlign: "center",
               }}
             >
-              {/* Connector Line */}
-              {index < steps.length - 1 && (
+              {/* Connector Line (only on desktop) */}
+              {isDesktop && index < steps.length - 1 && (
                 <div
                   style={{
                     position: "absolute",
@@ -84,7 +112,6 @@ export default function ProcessSection() {
                     right: "-50%",
                     height: "2px",
                     backgroundColor: "#6C63FF",
-                    display: window.innerWidth > 768 ? "block" : "none",
                   }}
                 />
               )}
@@ -95,7 +122,8 @@ export default function ProcessSection() {
                   width: "80px",
                   height: "80px",
                   borderRadius: "50%",
-                  backgroundColor: "linear-gradient(135deg, #6C63FF 0%, #5a52d5 100%)",
+                  background:
+                    "linear-gradient(135deg, #6C63FF 0%, #5a52d5 100%)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -109,10 +137,19 @@ export default function ProcessSection() {
               </div>
 
               {/* Step Content */}
-              <h3 style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "8px", color: "#1a1a1a" }}>
+              <h3
+                style={{
+                  fontSize: "18px",
+                  fontWeight: "bold",
+                  marginBottom: "8px",
+                  color: "#1a1a1a",
+                }}
+              >
                 {step.title}
               </h3>
-              <p style={{ fontSize: "14px", color: "#666", margin: "0" }}>{step.description}</p>
+              <p style={{ fontSize: "14px", color: "#666", margin: "0" }}>
+                {step.description}
+              </p>
             </motion.div>
           ))}
         </div>
