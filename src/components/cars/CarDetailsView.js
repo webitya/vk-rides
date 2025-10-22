@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import StarIcon from "@mui/icons-material/Star"
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar"
@@ -13,8 +13,13 @@ import CloseIcon from "@mui/icons-material/Close"
 export default function CarDetailsView({ car, onBookClick }) {
   const [selectedImage, setSelectedImage] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
 
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 768
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  const isMobile = isMounted && typeof window !== "undefined" && window.innerWidth < 768
 
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "#f8f9fa", paddingTop: "60px" }}>
