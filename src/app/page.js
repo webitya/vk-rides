@@ -12,6 +12,8 @@ import TestimonialsSection from "@/components/home/TestimonialsSection"
 import FAQSection from "@/components/home/FAQSection"
 import NewsletterSection from "@/components/home/NewsletterSection"
 import CTASection from "@/components/home/CTASection"
+import BenefitsSection from "@/components/home/BenefitsSection"
+import ProcessSection from "@/components/home/ProcessSection"
 
 export default function Home() {
   useEffect(() => {
@@ -24,6 +26,8 @@ export default function Home() {
       <FeaturesSection />
       <SearchSection />
       <CarsPreview />
+      <BenefitsSection />
+      <ProcessSection />
       <StatsSection />
       <BookingSection />
       <TestimonialsSection />

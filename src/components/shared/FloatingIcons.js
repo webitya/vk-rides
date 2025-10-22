@@ -15,11 +15,11 @@ export default function FloatingIcons() {
 
   return (
     <>
-      {/* Desktop Floating Icons - Bottom Right */}
+      {/* Desktop Floating Icons - Bottom Right - Hidden on Mobile */}
       <div
         style={{
           position: "fixed",
-          bottom: "30px",
+          bottom: "100px",
           right: "30px",
           display: "flex",
           flexDirection: "column",

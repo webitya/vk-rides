@@ -2,8 +2,26 @@
 
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
+import WhatsAppIcon from "@mui/icons-material/WhatsApp"
+import PhoneIcon from "@mui/icons-material/Phone"
+import EmailIcon from "@mui/icons-material/Email"
 
 export default function NavDrawer({ isOpen, onClose }) {
+  const handleWhatsApp = () => {
+    window.open("https://wa.me/919102430174?text=Hi%20VK%20RIDES%2C%20I%20want%20to%20book%20a%20car", "_blank")
+    onClose()
+  }
+
+  const handleCall = () => {
+    window.location.href = "tel:+919102430174"
+    onClose()
+  }
+
+  const handleEmail = () => {
+    window.location.href = "mailto:vkrides.in@gmail.com?subject=Car%20Booking%20Inquiry"
+    onClose()
+  }
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -58,6 +76,101 @@ export default function NavDrawer({ isOpen, onClose }) {
               >
                 Contact
               </Link>
+
+              <div style={{ borderTop: "1px solid #333", paddingTop: "20px", marginTop: "20px" }}>
+                <p
+                  style={{
+                    fontSize: "14px",
+                    color: "#aaa",
+                    marginBottom: "15px",
+                    textTransform: "uppercase",
+                    letterSpacing: "1px",
+                  }}
+                >
+                  Contact Us
+                </p>
+
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={handleWhatsApp}
+                  style={{
+                    width: "100%",
+                    padding: "12px 16px",
+                    marginBottom: "10px",
+                    backgroundColor: "#25D366",
+                    border: "none",
+                    borderRadius: "8px",
+                    color: "#fff",
+                    fontSize: "16px",
+                    fontWeight: "600",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "10px",
+                    transition: "all 0.3s ease",
+                  }}
+                >
+                  <WhatsAppIcon style={{ fontSize: "20px" }} />
+                  WhatsApp
+                </motion.button>
+
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={handleCall}
+                  style={{
+                    width: "100%",
+                    padding: "12px 16px",
+                    marginBottom: "10px",
+                    backgroundColor: "#1976D2",
+                    border: "none",
+                    borderRadius: "8px",
+                    color: "#fff",
+                    fontSize: "16px",
+                    fontWeight: "600",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "10px",
+                    transition: "all 0.3s ease",
+                  }}
+                >
+                  <PhoneIcon style={{ fontSize: "20px" }} />
+                  Call Now
+                </motion.button>
+
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={handleEmail}
+                  style={{
+                    width: "100%",
+                    padding: "12px 16px",
+                    backgroundColor: "#FF6B6B",
+                    border: "none",
+                    borderRadius: "8px",
+                    color: "#fff",
+                    fontSize: "16px",
+                    fontWeight: "600",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "10px",
+                    transition: "all 0.3s ease",
+                  }}
+                >
+                  <EmailIcon style={{ fontSize: "20px" }} />
+                  Email Us
+                </motion.button>
+
+                <p style={{ fontSize: "12px", color: "#aaa", marginTop: "15px", textAlign: "center" }}>
+                  vkrides.in@gmail.com
+                </p>
+              </div>
             </div>
           </motion.div>
         </>

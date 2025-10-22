@@ -6,12 +6,38 @@ import { motion } from "framer-motion"
 export default function NewsletterSection() {
   const [email, setEmail] = useState("")
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setSubmitted(true)
-    setEmail("")
-    setTimeout(() => setSubmitted(false), 3000)
+    setLoading(true)
+    setError("")
+
+    try {
+      const response = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to subscribe")
+      }
+
+      setSubmitted(true)
+      setEmail("")
+      setTimeout(() => setSubmitted(false), 5000)
+    } catch (err) {
+      setError(err.message || "Something went wrong. Please try again.")
+      setTimeout(() => setError(""), 5000)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -57,6 +83,7 @@ export default function NewsletterSection() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            disabled={loading}
             style={{
               flex: 1,
               minWidth: "200px",
@@ -65,35 +92,63 @@ export default function NewsletterSection() {
               borderRadius: "6px",
               fontSize: "14px",
               fontFamily: "inherit",
+              opacity: loading ? 0.7 : 1,
             }}
           />
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: loading ? 1 : 1.05 }}
+            whileTap={{ scale: loading ? 1 : 0.95 }}
             type="submit"
+            disabled={loading}
             style={{
               padding: "12px 30px",
-              backgroundColor: "#1a1a1a",
+              backgroundColor: loading ? "#999" : "#1a1a1a",
               color: "#fff",
               border: "none",
               borderRadius: "6px",
-              cursor: "pointer",
+              cursor: loading ? "not-allowed" : "pointer",
               fontWeight: "bold",
               fontSize: "14px",
             }}
           >
-            Subscribe
+            {loading ? "Subscribing..." : "Subscribe"}
           </motion.button>
         </motion.form>
 
         {submitted && (
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            style={{ marginTop: "15px", color: "#e0e0e0", fontSize: "14px" }}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            style={{
+              marginTop: "15px",
+              padding: "12px 15px",
+              backgroundColor: "rgba(255, 255, 255, 0.2)",
+              borderRadius: "6px",
+              fontSize: "14px",
+              color: "#e0e0e0",
+            }}
           >
-            ✓ Thank you for subscribing!
-          </motion.p>
+            ✓ Thank you for subscribing! Check your email for a welcome message.
+          </motion.div>
+        )}
+
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            style={{
+              marginTop: "15px",
+              padding: "12px 15px",
+              backgroundColor: "rgba(255, 100, 100, 0.3)",
+              borderRadius: "6px",
+              fontSize: "14px",
+              color: "#ffcccc",
+            }}
+          >
+            ✗ {error}
+          </motion.div>
         )}
       </div>
     </motion.section>
