@@ -38,11 +38,7 @@ export default function HeroSection() {
       x: dir > 0 ? 1000 : -1000,
       opacity: 0,
     }),
-    center: {
-      zIndex: 1,
-      x: 0,
-      opacity: 1,
-    },
+    center: { zIndex: 1, x: 0, opacity: 1 },
     exit: (dir) => ({
       zIndex: 0,
       x: dir < 0 ? 1000 : -1000,
@@ -52,13 +48,14 @@ export default function HeroSection() {
 
   return (
     <motion.section
+      className="hero-section"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
       style={{
         position: "relative",
         marginTop: "60px",
-        height: "clamp(190px, 65vh, 100vh)",
+        height: "65vh",
         overflow: "hidden",
         display: "flex",
         alignItems: "center",
@@ -66,6 +63,16 @@ export default function HeroSection() {
         backgroundColor: "#000",
       }}
     >
+      {/* ✅ Media query ensures phone height = 180px */}
+      <style jsx>{`
+        @media (max-width: 768px) {
+          .hero-section {
+            height: 180px !important;
+            max-height: 180px !important;
+          }
+        }
+      `}</style>
+
       <AnimatePresence initial={false} custom={direction} mode="wait">
         <motion.div
           key={currentSlide}
@@ -88,9 +95,7 @@ export default function HeroSection() {
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
-            // 👇 Removed zoom-like effect
             backgroundAttachment: "scroll",
-            transform: "scale(1)",
           }}
         >
           <motion.div
@@ -109,73 +114,71 @@ export default function HeroSection() {
         </motion.div>
       </AnimatePresence>
 
-      {/* Left Button */}
+      {/* Prev Button */}
       <motion.button
-        whileHover={{ scale: 1.15, backgroundColor: "rgba(255,255,255,0.6)" }}
+        whileHover={{ scale: 1.15 }}
         whileTap={{ scale: 0.9 }}
         onClick={handlePrev}
         style={{
           position: "absolute",
-          left: "20px",
+          left: "10px",
           top: "50%",
           transform: "translateY(-50%)",
           zIndex: 20,
           backgroundColor: "rgba(255,255,255,0.25)",
           border: "none",
           borderRadius: "50%",
-          width: "48px",
-          height: "48px",
+          width: "36px",
+          height: "36px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           cursor: "pointer",
           backdropFilter: "blur(8px)",
-          transition: "all 0.3s ease",
         }}
       >
-        <ChevronLeft size={28} color="#fff" strokeWidth={2.5} />
+        <ChevronLeft size={22} color="#fff" strokeWidth={2.5} />
       </motion.button>
 
-      {/* Right Button */}
+      {/* Next Button */}
       <motion.button
-        whileHover={{ scale: 1.15, backgroundColor: "rgba(255,255,255,0.6)" }}
+        whileHover={{ scale: 1.15 }}
         whileTap={{ scale: 0.9 }}
         onClick={handleNext}
         style={{
           position: "absolute",
-          right: "20px",
+          right: "10px",
           top: "50%",
           transform: "translateY(-50%)",
           zIndex: 20,
           backgroundColor: "rgba(255,255,255,0.25)",
           border: "none",
           borderRadius: "50%",
-          width: "48px",
-          height: "48px",
+          width: "36px",
+          height: "36px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           cursor: "pointer",
           backdropFilter: "blur(8px)",
-          transition: "all 0.3s ease",
         }}
       >
-        <ChevronRight size={28} color="#fff" strokeWidth={2.5} />
+        <ChevronRight size={22} color="#fff" strokeWidth={2.5} />
       </motion.button>
 
       {/* Dots */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3, duration: 0.6 }}
         style={{
           position: "absolute",
-          bottom: "16px",
+          bottom: "12px",
           left: "50%",
           transform: "translateX(-50%)",
           zIndex: 10,
           display: "flex",
-          gap: "8px",
+          gap: "6px",
         }}
       >
         {slides.map((_, index) => (
@@ -188,17 +191,17 @@ export default function HeroSection() {
             whileHover={{ scale: 1.3 }}
             whileTap={{ scale: 0.9 }}
             style={{
-              width: currentSlide === index ? "28px" : "8px",
-              height: "8px",
-              borderRadius: "4px",
+              width: currentSlide === index ? "24px" : "6px",
+              height: "6px",
+              borderRadius: "3px",
               backgroundColor:
                 currentSlide === index ? "#6C63FF" : "rgba(255,255,255,0.5)",
-              cursor: "pointer",
               border: "none",
+              cursor: "pointer",
               padding: 0,
             }}
             animate={{
-              width: currentSlide === index ? "28px" : "8px",
+              width: currentSlide === index ? "24px" : "6px",
               backgroundColor:
                 currentSlide === index ? "#6C63FF" : "rgba(255,255,255,0.5)",
             }}
