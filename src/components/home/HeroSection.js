@@ -9,18 +9,10 @@ export default function HeroSection() {
   const [direction, setDirection] = useState(0)
 
   const slides = [
-    {
-      image: "/luxury-car-on-road-sunset.jpg",
-    },
-    {
-      image: "/modern-car-interior-dashboard.jpg",
-    },
-    {
-      image: "/car-driving-on-highway.jpg",
-    },
-    {
-      image: "/family-car-travel-adventure.jpg",
-    },
+    { image: "/c1.jpg" },
+    { image: "/c1.jpg" },
+    { image: "/c1.jpg" },
+    { image: "/c1.jpg" },
   ]
 
   useEffect(() => {
@@ -95,7 +87,10 @@ export default function HeroSection() {
             backgroundImage: `url(${slides[currentSlide].image})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
-            backgroundAttachment: "fixed",
+            backgroundRepeat: "no-repeat",
+            // 👇 Removed zoom-like effect
+            backgroundAttachment: "scroll",
+            transform: "scale(1)",
           }}
         >
           <motion.div
@@ -114,6 +109,7 @@ export default function HeroSection() {
         </motion.div>
       </AnimatePresence>
 
+      {/* Left Button */}
       <motion.button
         whileHover={{ scale: 1.15, backgroundColor: "rgba(255,255,255,0.6)" }}
         whileTap={{ scale: 0.9 }}
@@ -140,6 +136,7 @@ export default function HeroSection() {
         <ChevronLeft size={28} color="#fff" strokeWidth={2.5} />
       </motion.button>
 
+      {/* Right Button */}
       <motion.button
         whileHover={{ scale: 1.15, backgroundColor: "rgba(255,255,255,0.6)" }}
         whileTap={{ scale: 0.9 }}
@@ -166,6 +163,7 @@ export default function HeroSection() {
         <ChevronRight size={28} color="#fff" strokeWidth={2.5} />
       </motion.button>
 
+      {/* Dots */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -193,14 +191,16 @@ export default function HeroSection() {
               width: currentSlide === index ? "28px" : "8px",
               height: "8px",
               borderRadius: "4px",
-              backgroundColor: currentSlide === index ? "#6C63FF" : "rgba(255,255,255,0.5)",
+              backgroundColor:
+                currentSlide === index ? "#6C63FF" : "rgba(255,255,255,0.5)",
               cursor: "pointer",
               border: "none",
               padding: 0,
             }}
             animate={{
               width: currentSlide === index ? "28px" : "8px",
-              backgroundColor: currentSlide === index ? "#6C63FF" : "rgba(255,255,255,0.5)",
+              backgroundColor:
+                currentSlide === index ? "#6C63FF" : "rgba(255,255,255,0.5)",
             }}
             transition={{ duration: 0.3 }}
           />
