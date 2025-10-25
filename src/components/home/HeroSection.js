@@ -7,14 +7,33 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 export default function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [direction, setDirection] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
 
-  const slides = [
+  // 🖼️ Define both desktop & mobile image sets
+  const slidesDesktop = [
     { image: "/c1.jpg" },
     { image: "/c2.jpg" },
     { image: "/c3.jpg" },
     { image: "/c4.jpg" },
   ]
 
+  const slidesMobile = [
+    { image: "/ca1m.jpg" },
+    { image: "/ca2m.jpg" },
+    { image: "/ca3m.jpg" },
+  ]
+
+  // Detect if user is on mobile (client-side only)
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768)
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
+
+  const slides = isMobile ? slidesMobile : slidesDesktop
+
+  // Auto-slide
   useEffect(() => {
     const timer = setInterval(() => {
       setDirection(1)
@@ -55,7 +74,7 @@ export default function HeroSection() {
       style={{
         position: "relative",
         marginTop: "60px",
-        height: "65vh",
+        height: "65vh", // Desktop height: 65% of viewport height
         overflow: "hidden",
         display: "flex",
         alignItems: "center",
@@ -63,16 +82,18 @@ export default function HeroSection() {
         backgroundColor: "#000",
       }}
     >
-      {/* ✅ Media query ensures phone height = 180px */}
+      {/* ✅ Responsive height for mobile (CHANGED HEIGHT) */}
       <style jsx>{`
         @media (max-width: 768px) {
           .hero-section {
-            height: 180px !important;
-            max-height: 180px !important;
+            /* Setting height to 250px to match your 320x250 canvas height */
+            height: 250px !important; 
+            max-height: 250px !important;
           }
         }
       `}</style>
 
+      {/* ✅ Slide transition */}
       <AnimatePresence initial={false} custom={direction} mode="wait">
         <motion.div
           key={currentSlide}
@@ -87,12 +108,10 @@ export default function HeroSection() {
           }}
           style={{
             position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
+            inset: 0,
             backgroundImage: `url(${slides[currentSlide].image})`,
-            backgroundSize: "cover",
+            // 👇 This combination is CRUCIAL for filling the 320x250 mobile container
+            backgroundSize: "cover", 
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
             backgroundAttachment: "scroll",
@@ -104,67 +123,21 @@ export default function HeroSection() {
             transition={{ duration: 0.6 }}
             style={{
               position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
+              inset: 0,
               backgroundColor: "rgba(0,0,0,0.35)",
             }}
           />
         </motion.div>
       </AnimatePresence>
 
-      {/* Prev Button */}
-      <motion.button
-        whileHover={{ scale: 1.15 }}
-        whileTap={{ scale: 0.9 }}
-        onClick={handlePrev}
-        style={{
-          position: "absolute",
-          left: "10px",
-          top: "50%",
-          transform: "translateY(-50%)",
-          zIndex: 20,
-          backgroundColor: "rgba(255,255,255,0.25)",
-          border: "none",
-          borderRadius: "50%",
-          width: "36px",
-          height: "36px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          cursor: "pointer",
-          backdropFilter: "blur(8px)",
-        }}
-      >
+      {/* Navigation Buttons */}
+      <NavButton direction="prev" onClick={handlePrev}>
         <ChevronLeft size={22} color="#fff" strokeWidth={2.5} />
-      </motion.button>
+      </NavButton>
 
-      {/* Next Button */}
-      <motion.button
-        whileHover={{ scale: 1.15 }}
-        whileTap={{ scale: 0.9 }}
-        onClick={handleNext}
-        style={{
-          position: "absolute",
-          right: "10px",
-          top: "50%",
-          transform: "translateY(-50%)",
-          zIndex: 20,
-          backgroundColor: "rgba(255,255,255,0.25)",
-          border: "none",
-          borderRadius: "50%",
-          width: "36px",
-          height: "36px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          cursor: "pointer",
-          backdropFilter: "blur(8px)",
-        }}
-      >
+      <NavButton direction="next" onClick={handleNext}>
         <ChevronRight size={22} color="#fff" strokeWidth={2.5} />
-      </motion.button>
+      </NavButton>
 
       {/* Dots */}
       <motion.div
@@ -210,5 +183,36 @@ export default function HeroSection() {
         ))}
       </motion.div>
     </motion.section>
+  )
+}
+
+/* ✅ Reusable Navigation Button Component */
+function NavButton({ direction, onClick, children }) {
+  const isPrev = direction === "prev"
+  return (
+    <motion.button
+      whileHover={{ scale: 1.15 }}
+      whileTap={{ scale: 0.9 }}
+      onClick={onClick}
+      style={{
+        position: "absolute",
+        [isPrev ? "left" : "right"]: "10px",
+        top: "50%",
+        transform: "translateY(-50%)",
+        zIndex: 20,
+        backgroundColor: "rgba(255,255,255,0.25)",
+        border: "none",
+        borderRadius: "50%",
+        width: "36px",
+        height: "36px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        cursor: "pointer",
+        backdropFilter: "blur(8px)",
+      }}
+    >
+      {children}
+    </motion.button>
   )
 }
