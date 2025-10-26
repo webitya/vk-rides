@@ -42,28 +42,16 @@ export default function Footer() {
           <div>
             <h3 style={{ fontSize: "20px", fontWeight: "bold", marginBottom: "15px" }}>Quick Links</h3>
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-              <Link
-                href="/"
-                style={{ textDecoration: "none", color: "#aaa", fontSize: "14px", transition: "color 0.3s" }}
-              >
+              <Link href="/" style={{ textDecoration: "none", color: "#aaa", fontSize: "14px", transition: "color 0.3s" }}>
                 Home
               </Link>
-              <Link
-                href="/cars"
-                style={{ textDecoration: "none", color: "#aaa", fontSize: "14px", transition: "color 0.3s" }}
-              >
+              <Link href="/cars" style={{ textDecoration: "none", color: "#aaa", fontSize: "14px", transition: "color 0.3s" }}>
                 Our Fleet
               </Link>
-              <Link
-                href="/about"
-                style={{ textDecoration: "none", color: "#aaa", fontSize: "14px", transition: "color 0.3s" }}
-              >
+              <Link href="/about" style={{ textDecoration: "none", color: "#aaa", fontSize: "14px", transition: "color 0.3s" }}>
                 About Us
               </Link>
-              <Link
-                href="/contact"
-                style={{ textDecoration: "none", color: "#aaa", fontSize: "14px", transition: "color 0.3s" }}
-              >
+              <Link href="/contact" style={{ textDecoration: "none", color: "#aaa", fontSize: "14px", transition: "color 0.3s" }}>
                 Contact
               </Link>
             </div>
@@ -73,16 +61,10 @@ export default function Footer() {
           <div>
             <h3 style={{ fontSize: "20px", fontWeight: "bold", marginBottom: "15px" }}>Legal</h3>
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-              <Link
-                href="/terms"
-                style={{ textDecoration: "none", color: "#aaa", fontSize: "14px", transition: "color 0.3s" }}
-              >
+              <Link href="/terms" style={{ textDecoration: "none", color: "#aaa", fontSize: "14px", transition: "color 0.3s" }}>
                 Terms & Conditions
               </Link>
-              <Link
-                href="/privacy"
-                style={{ textDecoration: "none", color: "#aaa", fontSize: "14px", transition: "color 0.3s" }}
-              >
+              <Link href="/privacy" style={{ textDecoration: "none", color: "#aaa", fontSize: "14px", transition: "color 0.3s" }}>
                 Privacy Policy
               </Link>
             </div>
@@ -100,16 +82,36 @@ export default function Footer() {
           <div>
             <h3 style={{ fontSize: "20px", fontWeight: "bold", marginBottom: "15px" }}>Follow Us</h3>
             <div style={{ display: "flex", gap: "15px" }}>
-              <a href="#" style={{ color: "#aaa", transition: "color 0.3s", cursor: "pointer" }}>
+              <a
+                href="https://www.instagram.com/vkridesselfdrivecar?igsh=MWtmYmIxbXBqNm5ocw=="
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "#aaa", transition: "color 0.3s", cursor: "pointer" }}
+              >
                 <FacebookIcon />
               </a>
-              <a href="#" style={{ color: "#aaa", transition: "color 0.3s", cursor: "pointer" }}>
+              <a
+                href="https://www.instagram.com/vkridesselfdrivecar?igsh=MWtmYmIxbXBqNm5ocw=="
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "#aaa", transition: "color 0.3s", cursor: "pointer" }}
+              >
                 <TwitterIcon />
               </a>
-              <a href="#" style={{ color: "#aaa", transition: "color 0.3s", cursor: "pointer" }}>
+              <a
+                href="https://www.instagram.com/vkridesselfdrivecar?igsh=MWtmYmIxbXBqNm5ocw=="
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "#aaa", transition: "color 0.3s", cursor: "pointer" }}
+              >
                 <InstagramIcon />
               </a>
-              <a href="#" style={{ color: "#aaa", transition: "color 0.3s", cursor: "pointer" }}>
+              <a
+                href="https://www.instagram.com/vkridesselfdrivecar?igsh=MWtmYmIxbXBqNm5ocw=="
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "#aaa", transition: "color 0.3s", cursor: "pointer" }}
+              >
                 <LinkedInIcon />
               </a>
             </div>
