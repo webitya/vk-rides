@@ -8,7 +8,9 @@ import EmailIcon from "@mui/icons-material/Email"
 import CreditCardIcon from "@mui/icons-material/CreditCard"
 
 export default function BookingOptionsModal({ car, onClose, onSelectOption }) {
-  const [isMobile, setIsMobile] = useState(false)
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" ? window.innerWidth < 768 : false
+  )
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768)
@@ -55,13 +57,27 @@ export default function BookingOptionsModal({ car, onClose, onSelectOption }) {
   const modalContent = (
     <div style={{ padding: isMobile ? "16px" : "24px" }}>
       <div style={{ marginBottom: isMobile ? "16px" : "20px" }}>
-        <h2 style={{ fontSize: isMobile ? "18px" : "22px", fontWeight: "bold", marginBottom: "4px", color: "#1a1a1a" }}>
+        <h2
+          style={{
+            fontSize: isMobile ? "18px" : "22px",
+            fontWeight: "bold",
+            marginBottom: "4px",
+            color: "#1a1a1a",
+          }}
+        >
           Book {car.name}
         </h2>
         <p style={{ fontSize: "12px", color: "#999" }}>₹{car.pricePerDay} per day</p>
       </div>
 
-      <p style={{ fontSize: "13px", color: "#666", marginBottom: isMobile ? "14px" : "18px", textAlign: "center" }}>
+      <p
+        style={{
+          fontSize: "13px",
+          color: "#666",
+          marginBottom: isMobile ? "14px" : "18px",
+          textAlign: "center",
+        }}
+      >
         Choose your booking method
       </p>
 
@@ -106,10 +122,18 @@ export default function BookingOptionsModal({ car, onClose, onSelectOption }) {
                 <IconComponent style={{ fontSize: isMobile ? "20px" : "24px" }} />
               </div>
               <div style={{ flex: 1 }}>
-                <div style={{ fontSize: isMobile ? "14px" : "15px", fontWeight: "bold", color: "#1a1a1a" }}>
+                <div
+                  style={{
+                    fontSize: isMobile ? "14px" : "15px",
+                    fontWeight: "bold",
+                    color: "#1a1a1a",
+                  }}
+                >
                   {method.title}
                 </div>
-                <div style={{ fontSize: "11px", color: "#666", marginTop: "2px" }}>{method.description}</div>
+                <div style={{ fontSize: "11px", color: "#666", marginTop: "2px" }}>
+                  {method.description}
+                </div>
               </div>
               <div style={{ fontSize: "18px", color: method.color }}>→</div>
             </motion.button>
@@ -117,21 +141,30 @@ export default function BookingOptionsModal({ car, onClose, onSelectOption }) {
         })}
       </div>
 
-      <p style={{ fontSize: "11px", color: "#999", marginTop: isMobile ? "14px" : "18px", textAlign: "center" }}>
+      <p
+        style={{
+          fontSize: "11px",
+          color: "#999",
+          marginTop: isMobile ? "14px" : "18px",
+          textAlign: "center",
+        }}
+      >
         All methods are secure
       </p>
     </div>
   )
 
+  // ============================
+  // ✅ MOBILE DRAWER VERSION
+  // ============================
   if (isMobile) {
-    // Mobile drawer from right side
     return (
       <AnimatePresence>
         <motion.div
+          key="mobile-overlay"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          onClick={onClose}
           style={{
             position: "fixed",
             top: 0,
@@ -139,60 +172,63 @@ export default function BookingOptionsModal({ car, onClose, onSelectOption }) {
             right: 0,
             bottom: 0,
             backgroundColor: "rgba(0,0,0,0.5)",
-            zIndex: 2000,
+            zIndex: 3000,
+            display: "flex",
+            justifyContent: "flex-end",
           }}
+          onClick={onClose}
         >
           <motion.div
+            key="mobile-drawer"
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
             onClick={(e) => e.stopPropagation()}
             style={{
-              position: "fixed",
-              right: 0,
-              top: 0,
-              bottom: 0,
               width: "85%",
-              maxWidth: "320px",
+              maxWidth: "340px",
+              height: "100%",
               backgroundColor: "#fff",
               boxShadow: "-4px 0 20px rgba(0,0,0,0.2)",
               overflowY: "auto",
-              zIndex: 2001,
+              position: "relative",
+              paddingBottom: "20px",
+              borderTopLeftRadius: "16px",
+              borderBottomLeftRadius: "16px",
             }}
           >
             <button
               onClick={onClose}
               style={{
-                position: "sticky",
+                position: "absolute",
                 top: "12px",
                 right: "12px",
                 background: "none",
                 border: "none",
-                fontSize: "24px",
+                fontSize: "26px",
                 cursor: "pointer",
                 color: "#999",
-                padding: "8px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                float: "right",
                 zIndex: 10,
               }}
             >
               <CloseIcon />
             </button>
-            <div style={{ clear: "both" }}>{modalContent}</div>
+
+            <div style={{ marginTop: "40px" }}>{modalContent}</div>
           </motion.div>
         </motion.div>
       </AnimatePresence>
     )
   }
 
-  // Desktop modal
+  // ============================
+  // ✅ DESKTOP MODAL VERSION
+  // ============================
   return (
     <AnimatePresence>
       <motion.div
+        key="desktop-overlay"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -212,6 +248,7 @@ export default function BookingOptionsModal({ car, onClose, onSelectOption }) {
         }}
       >
         <motion.div
+          key="desktop-modal"
           initial={{ scale: 0.9, opacity: 0, y: 20 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -253,14 +290,16 @@ export default function BookingOptionsModal({ car, onClose, onSelectOption }) {
                 color: "#fff",
                 transition: "all 0.3s ease",
               }}
-              onMouseEnter={(e) => (e.target.style.background = "rgba(255,255,255,0.3)")}
-              onMouseLeave={(e) => (e.target.style.background = "rgba(255,255,255,0.2)")}
             >
               <CloseIcon />
             </button>
 
-            <h2 style={{ fontSize: "24px", fontWeight: "bold", margin: "0 0 6px 0" }}>Book {car.name}</h2>
-            <p style={{ fontSize: "13px", margin: "0", opacity: 0.9 }}>₹{car.pricePerDay} per day</p>
+            <h2 style={{ fontSize: "24px", fontWeight: "bold", margin: "0 0 6px 0" }}>
+              Book {car.name}
+            </h2>
+            <p style={{ fontSize: "13px", margin: "0", opacity: 0.9 }}>
+              ₹{car.pricePerDay} per day
+            </p>
           </div>
 
           {modalContent}
