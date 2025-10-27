@@ -6,11 +6,11 @@ import PhoneIcon from "@mui/icons-material/Phone"
 
 export default function FloatingIcons() {
   const handleWhatsApp = () => {
-    window.open("https://wa.me/919102430174?text=Hi%20VK%20RIDES%2C%20I%20want%20to%20book%20a%20car", "_blank")
+    window.open("https://wa.me/919102430175?text=Hi%20VK%20RIDES%2C%20I%20want%20to%20book%20a%20car", "_blank")
   }
 
   const handleCall = () => {
-    window.location.href = "tel:+919102430174"
+    window.location.href = "tel:+919102430175"
   }
 
   return (
