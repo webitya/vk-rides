@@ -16,7 +16,7 @@ export default function ContactPage() {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
           <h1 style={{ fontSize: "48px", fontWeight: "bold", marginBottom: "10px", color: "#1a1a1a" }}>Contact Us</h1>
           <p style={{ fontSize: "18px", color: "#666", marginBottom: "40px" }}>
-            Get in touch with us for any queries or bookings
+            Get in touch with us for any queries or looking for car rental near me Jamshedpur for bookings
           </p>
         </motion.div>
 

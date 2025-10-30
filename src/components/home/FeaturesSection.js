@@ -42,7 +42,7 @@ export default function FeaturesSection() {
           <h2 style={{ fontSize: "42px", fontWeight: "bold", marginBottom: "15px", color: "#1a1a1a" }}>
             Why Choose VK RIDES?
           </h2>
-          <p style={{ fontSize: "18px", color: "#666" }}>We provide the best car rental experience in Jamshedpur</p>
+          <p style={{ fontSize: "18px", color: "#666" }}>We provide the best car rental experience in Jamshedpur and we aslo provide self drive car in Jamshedpur</p>
         </motion.div>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "30px" }}>
